@@ -1,7 +1,14 @@
 #!/usr/bin/env node
 var debug = require('debug')('app_v1');
 var app = require('../app');
+var mysql = require('mysql');
 
+/* Connect mysql */
+var client = mysql.createConnection({
+	user: 'root',
+	password: 'dp980605',
+	database: 'tipenwon'
+});
 
 app.set('port', process.env.PORT || 3000);
 
@@ -9,7 +16,20 @@ var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
 
-var io = require('socket.io').listen(server);
-io.sockets.on('', function(socket){
 
+var io = require('socket.io').listen(server);
+io.sockets.on('connection', function(socket){
+
+	socket.on('loginCheck', function(data){
+		client.query('SELECT id, pw FROM memberships WHERE (id=data.id) AND (pw=data.pw)', function(error, result, fields){
+			if(error){
+				socket.emit('message", 'Please Check again');
+			}else{
+				
+			}
+		
+		});
+	});
+	
+	
 });
