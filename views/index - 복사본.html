@@ -18,9 +18,7 @@
 		$(document).ready(function(){
 			//************ Connect to Server ************
 			var socket = io.connect();
-			
-			var errMsg = <%= msg %>;
-			if(
+
 			
 			$('#loginBtn').click(function(){
 				var id = $('#id').val();
@@ -57,9 +55,9 @@
 	<fieldset>
 		<div class="loginInput">
 			<label for="id-text-basic" class="ui-hidden-accessible">아이디:</label>
-			<input id="id" type="text" name="id-text-basic" id="id-text-basic" placeholder="아이디:" value="" >
+			<input id="id" type="text" name="id" id="id-text-basic" placeholder="아이디:" value="" >
 			<label for="pw-password" class="ui-hidden-accessible">비밀번호:</label>
-			<input id="pw" type="password" name="pw-password" id="pw-password" placeholder="비밀번호:" value="" >
+			<input id="pw" type="password" name="pw" id="pw-password" placeholder="비밀번호:" value="" >
 		</div>
 		<div class="loginBtn">
 			<div class="loginBtnText">
