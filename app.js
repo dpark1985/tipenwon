@@ -4,11 +4,54 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index');
-//var users = require('./routes/users');
+var debug = require('debug')('app_v1');
 
 var app = express();
+
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+
+var router = express.Router();
+
+//var routes = require('./routes/index');
+//var users = require('./routes/users');
+router.get('/', function(req, res) {
+	  res.render('index', { msg: errMsg });
+});
+
+/* POST home page. */
+router.post('/', function(req, res){
+	var data = req.body;
+	
+	var id = data.id;
+	var pw = data.pw;
+	
+	if(id === '' || pw === ''){
+		errMsg = "아이디와 비밀번호를 다시 확인해주세요.";
+		res.redirect('/');
+	}
+	
+	client.query('SELECT id, pw FROM memberships WHERE (id=data.id) AND (pw=data.pw)', function(error, result, fields){
+		if(error){
+			socket.emit('message', 'Please Check again');
+		}else{
+			res.redirect('/clickinout');
+		}
+	});					
+});
+
+/* GET home page. */
+router.get('/clickinout', function(req, res){
+	res.render('clickinout');
+});
+
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,4 +100,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+
